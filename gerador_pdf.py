@@ -12,8 +12,9 @@ class PDF(FPDF):
     def header(self):
         # Esta função é chamada automaticamente ao criar uma nova página
         # 1. Adiciona as fontes (é preciso fazer isso antes de usar)
-        self.add_font('Merriweather', 'B', 'fonts/Merriweather-Bold.ttf')
-        self.add_font('Merriweather', '', 'fonts/Merriweather-Regular.ttf')
+        # --- LINHAS ATUALIZADAS ---
+        self.add_font('Merriweather', 'B', 'fonts/Merriweather-VariableFont_opsz,wdth,wght.ttf')
+        self.add_font('Merriweather', '', 'fonts/Merriweather-VariableFont_opsz,wdth,wght.ttf')
         
         # 2. Título do Jornal (Masthead)
         self.set_font('Merriweather', 'B', 24)
@@ -45,8 +46,9 @@ def criar_pdf_noticia(titulo, texto, autor):
     pdf.add_page()
     
     # Adiciona as fontes de corpo
-    pdf.add_font('Lora', '', 'fonts/Lora-Regular.ttf')
-    pdf.add_font('Lora', 'I', 'fonts/Lora-Italic.ttf')
+    # --- LINHAS ATUALIZADAS ---
+    pdf.add_font('Lora', '', 'fonts/Lora-VariableFont_wght.ttf')
+    pdf.add_font('Lora', 'I', 'fonts/Lora-Italic-VariableFont_wght.ttf')
 
     # --- Título da Notícia (Headline) ---
     pdf.set_font('Merriweather', 'B', 20)
