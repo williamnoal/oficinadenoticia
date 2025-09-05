@@ -10,22 +10,21 @@ MARGEM = 15
 
 class PDF(FPDF):
     def header(self):
-        # Esta função é chamada automaticamente ao criar uma nova página
-        # 1. Adiciona as fontes (é preciso fazer isso antes de usar)
+        # Adiciona as fontes com os nomes corretos (com tamanho óptico)
         # --- LINHAS ATUALIZADAS ---
-        self.add_font('Merriweather', 'B', 'fonts/Merriweather-VariableFont_opsz,wdth,wght.ttf')
-        self.add_font('Merriweather', '', 'fonts/Merriweather-VariableFont_opsz,wdth,wght.ttf')
+        self.add_font('Merriweather', 'B', 'fonts/Merriweather_24pt-Bold.ttf')
+        self.add_font('Merriweather', '', 'fonts/Merriweather_24pt-Regular.ttf')
         
-        # 2. Título do Jornal (Masthead)
+        # Título do Jornal (Masthead)
         self.set_font('Merriweather', 'B', 24)
         self.cell(0, 10, 'Oficina de Notícias Digital', border=0, ln=1, align='C')
         
-        # 3. Data e Edição
+        # Data e Edição
         data_hoje = datetime.now().strftime('%d de %B de %Y')
         self.set_font('Merriweather', '', 10)
         self.cell(0, 10, f'Edição de {data_hoje}', border=0, ln=1, align='C')
         
-        # 4. Linha horizontal separadora
+        # Linha horizontal separadora
         self.line(MARGEM, self.get_y() + 5, LARGURA_PAGINA - MARGEM, self.get_y() + 5)
         
         # Pula um espaço para o conteúdo
@@ -45,10 +44,9 @@ def criar_pdf_noticia(titulo, texto, autor):
     pdf = PDF()
     pdf.add_page()
     
-    # Adiciona as fontes de corpo
-    # --- LINHAS ATUALIZADAS ---
-    pdf.add_font('Lora', '', 'fonts/Lora-VariableFont_wght.ttf')
-    pdf.add_font('Lora', 'I', 'fonts/Lora-Italic-VariableFont_wght.ttf')
+    # Adiciona as fontes de corpo estáticas (Lora não tem tamanho óptico)
+    pdf.add_font('Lora', '', 'fonts/Lora-Regular.ttf')
+    pdf.add_font('Lora', 'I', 'fonts/Lora-Italic.ttf')
 
     # --- Título da Notícia (Headline) ---
     pdf.set_font('Merriweather', 'B', 20)
@@ -62,8 +60,6 @@ def criar_pdf_noticia(titulo, texto, autor):
 
     # --- Corpo do Texto da Notícia ---
     pdf.set_font('Lora', '', 12)
-    # Usamos multi_cell para que o texto quebre a linha automaticamente
-    # O alinhamento 'J' (justificado) dá o visual clássico de jornal
     pdf.multi_cell(0, 7, texto, 0, 'J')
     
     # Gera o PDF em memória e retorna como bytes
