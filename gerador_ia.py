@@ -1,15 +1,12 @@
 # gerador_ia.py
 
-import streamlit as st # Adicione esta importação
+import streamlit as st
 import google.generativeai as genai
-# from config import API_KEY -> Esta linha foi removida
 from templates import criar_prompt
 
-# --- FUNÇÃO ATUALIZADA ---
 def configurar_ia():
     """Configura a API do Google com a chave fornecida pelos segredos do Streamlit."""
     try:
-        # Busca a chave dos segredos do Streamlit
         api_key = st.secrets["API_KEY"]
         genai.configure(api_key=api_key)
         return True
@@ -17,10 +14,8 @@ def configurar_ia():
         print(f"Erro ao configurar a API: {e}")
         return False
 
-# --- FUNÇÃO ATUALIZADA ---
 def gerar_noticia_com_ia(respostas):
     """Envia as respostas para a IA e retorna o texto gerado."""
-    # Verifica se a chave de API está nos segredos do Streamlit
     if "API_KEY" not in st.secrets or not st.secrets["API_KEY"]:
         return {
             "erro": "API Key não configurada. Por favor, adicione-a nos segredos (Secrets) do seu app no Streamlit Cloud."
@@ -32,7 +27,10 @@ def gerar_noticia_com_ia(respostas):
         }
         
     try:
-        model = genai.GenerativeModel('gemini-pro')
+        # --- AQUI ESTÁ A CORREÇÃO ---
+        # Trocamos 'gemini-pro' por 'gemini-1.5-flash-latest'
+        model = genai.GenerativeModel('gemini-1.5-flash-latest')
+        
         prompt = criar_prompt(respostas)
         
         response = model.generate_content(prompt)
