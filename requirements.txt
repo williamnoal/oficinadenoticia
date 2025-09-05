@@ -1,2 +1,5 @@
+# requirements.txt
+
 google-generativeai
 streamlit
+fpdf2
